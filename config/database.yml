@@ -6,7 +6,7 @@ default: &default
   password:
 
 development: &development
-  <<: *base
+  <<: *default
   database: image_development
 
 test:

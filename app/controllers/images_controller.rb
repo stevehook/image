@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
 class ImagesController < ApplicationController
-  def create
-  end
+  def create; end
 end

@@ -11,6 +11,16 @@ RSpec.describe ImagesController, type: :request do
     )
   end
 
+  describe '#show' do
+    context 'with a valid image id' do
+      let!(:image) { Image.create(name: 'red', file: file) }
+
+      it 'returns the image file' do
+        get image_url(id: image.id)
+      end
+    end
+  end
+
   describe '#create' do
     context 'with valid input params' do
       let(:params) { { image: { name: 'red', file: file } } }

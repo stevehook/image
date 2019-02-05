@@ -3,7 +3,7 @@ AllCops:
   Exclude:
     - 'bin/**/*'
     - 'vendor/**/*'
-    - 'db/schema.rb'
+    - 'db/**/*'
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'

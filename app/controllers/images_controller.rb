@@ -14,6 +14,6 @@ class ImagesController < ApplicationController
   private
 
   def image_create_params
-    params.require(:image).permit(:name)
+    params.require(:image).permit(:name, :file)
   end
 end

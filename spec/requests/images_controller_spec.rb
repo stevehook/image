@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe ImagesController, type: :request do
   let(:file) do
     fixture_file_upload(
@@ -25,9 +26,15 @@ RSpec.describe ImagesController, type: :request do
         end.to change { Image.count }.by(1)
       end
 
+      it 'creates an attachment record' do
+        expect do
+          post images_url, params: params
+        end.to change { ActiveStorage::Attachment.count }.by(1)
+      end
+
       it 'returns the id of the new Image' do
         post images_url, params: params
-        expect(JSON.parse(response.body).symbolize_keys).to eq({ id: Image.last.id })
+        expect(JSON.parse(response.body).symbolize_keys).to eq(id: Image.last.id)
       end
     end
 
@@ -42,7 +49,13 @@ RSpec.describe ImagesController, type: :request do
       it 'creates an image record' do
         expect do
           post images_url, params: params
-        end.not_to change { Image.count }
+        end.not_to(change { Image.count })
+      end
+
+      it 'creates an attachment record' do
+        expect do
+          post images_url, params: params
+        end.not_to(change { ActiveStorage::Attachment.count })
       end
 
       it 'returns error message' do
@@ -52,3 +65,4 @@ RSpec.describe ImagesController, type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

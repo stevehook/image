@@ -13,7 +13,7 @@ RSpec.describe ImagesController, type: :request do
   describe '#create' do
     it 'returns success' do
       post images_url, params: { image: { name: 'red', file: file } }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'creates an image record' do

@@ -26,6 +26,7 @@ class ImagesController < ApplicationController
 
   def get_file_for(image, format)
     return image.file if format.blank?
+
     image.file.variant(format: format).processed
   end
 

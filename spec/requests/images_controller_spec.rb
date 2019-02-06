@@ -5,18 +5,21 @@ require 'rails_helper'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe ImagesController, type: :request do
   let(:file) do
-    fixture_file_upload(
-      Rails.root.join('spec', 'fixtures', 'red.jpg'),
-      'image/jpg'
-    )
+    fixture_file_upload( Rails.root.join('spec', 'fixtures', 'red.jpg'), 'image/jpg')
   end
 
   describe '#show' do
     context 'with a valid image id' do
       let!(:image) { Image.create(name: 'red', file: file) }
 
+      it 'returns success code' do
+        get image_url(id: image.id)
+        expect(response).to be_successful
+      end
+
       it 'returns the image file' do
         get image_url(id: image.id)
+        expect(response).to be_successful
       end
     end
   end

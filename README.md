@@ -1,24 +1,14 @@
-# README
+# Image
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Image is a simple image storage and processing service.
 
-Things you may want to cover:
+It is built using Ruby on Rails with a minimal API-only stack.
 
-* Ruby version
+It uses Active Storage to handle image storage. Images are stored
+locally when uploaded at the moment. Before going live we would need to
+configure Active Storage to use a cloud storage provider such as Amazon
+S3.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Image storage and processing is currently done by the Web server itself.
+In order to scale we would need to offload this work to a background
+process using Sidekiq, delayed job or similar.

@@ -11,6 +11,16 @@ class ImagesController < ApplicationController
     end
   end
 
+  def show
+    image = Image.find(params[:id])
+    send_data(
+      image.file.download,
+      filename: image.file.blob.filename,
+      type: image.file.blob.content_type,
+      disposition: 'inline'
+    )
+  end
+
   private
 
   def image_create_params

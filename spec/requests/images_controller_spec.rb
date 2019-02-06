@@ -6,6 +6,7 @@ require 'rails_helper'
 RSpec.describe ImagesController, type: :request do
   let(:file_path) { Rails.root.join('spec', 'fixtures', 'red.jpg') }
   let(:file) { fixture_file_upload(file_path, 'image/jpg') }
+  let(:expected_response_body) { File.read(file_path) }
 
   describe '#show' do
     context 'with a valid image id' do
@@ -16,7 +17,6 @@ RSpec.describe ImagesController, type: :request do
         expect(response).to be_successful
       end
 
-      let(:expected_response_body) { File.read(file_path) }
       it 'returns the image file' do
         get image_url(id: image.id)
         expect(response.body.bytes).to eq expected_response_body.bytes
@@ -29,6 +29,20 @@ RSpec.describe ImagesController, type: :request do
       it 'returns not found' do
         get image_url(id: image.id + 1)
         expect(response).to be_not_found
+      end
+    end
+
+    context 'with a request specifying a different format' do
+      let(:image) { Image.create(name: 'red', file: file) }
+
+      it 'returns success code' do
+        get image_url(id: image.id, format: :png)
+        expect(response).to be_successful
+      end
+
+      it 'returns the image file in png format' do
+        get image_url(id: image.id, format: :png)
+        expect(response.body.bytes).not_to eq expected_response_body.bytes
       end
     end
   end

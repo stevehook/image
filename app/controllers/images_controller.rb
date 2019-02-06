@@ -13,15 +13,21 @@ class ImagesController < ApplicationController
 
   def show
     image = Image.find(params[:id])
+    file = get_file_for(image, params[:format])
     send_data(
-      image.file.download,
-      filename: image.file.blob.filename,
-      type: image.file.blob.content_type,
+      file.download,
+      filename: file.blob.filename,
+      type: file.blob.content_type,
       disposition: 'inline'
     )
   end
 
   private
+
+  def get_file_for(image, format)
+    return image.file if format.blank?
+    image.file.variant(format: format).processed
+  end
 
   def image_create_params
     params.require(:image).permit(:name, :file)

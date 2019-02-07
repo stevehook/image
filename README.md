@@ -12,3 +12,6 @@ S3.
 Image storage and processing is currently done by the Web server itself.
 In order to scale we would need to offload this work to a background
 process using Sidekiq, delayed job or similar.
+
+Note that API requests are not authenticated. This is another feature we
+would need to consider before going live.
